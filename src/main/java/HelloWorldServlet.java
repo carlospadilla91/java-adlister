@@ -12,7 +12,12 @@ public class HelloWorldServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
+        String thingToBeGreeted = req.getParameter("name");
+        if (thingToBeGreeted == null) {
+            thingToBeGreeted = "World";
+        }
 
-        out.printf("<h1>Hello World!</h1>");
+        String output = String.format("<h1>Hello, %s!</h1>", thingToBeGreeted);
+        out.printf(output);
     }
 }
