@@ -13,7 +13,9 @@
         String password = request.getParameter("password");
 
         if (username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password")) {
-            response.sendRedirect("profile.jsp");
+            response.sendRedirect("/profile.jsp");
+        } else {
+            response.sendRedirect("/login.jsp");
         }
     }
 
@@ -23,8 +25,9 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Login Page</h1>
 
-<form action="login.jsp" method="post">
+<form action="/login.jsp" method="POST">
     <label for="username">Enter Username</label>
     <input id="username" type="text" name="username" placeholder="Username">
     <br>
