@@ -21,10 +21,12 @@
 
 %>
 <html>
-<head>
-    <title>Title</title>
-</head>
+<jsp:include page="partials/head.jsp">
+<jsp:param name="title" value="Login Page"/>
+</jsp:include>
+
 <body>
+<%@include file="partials/navbar.html"%>
 <h1>Login Page</h1>
 
 <form action="/login.jsp" method="POST">
@@ -37,6 +39,6 @@
     <button>Submit</button>
 </form>
 
-
+<%@include file="partials/footer.html"%>
 </body>
 </html>
