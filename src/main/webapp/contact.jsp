@@ -8,11 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <jsp:include page="partials/head.jsp">
-    <jsp:param name="title" value="Contact Page"/>
+    <jsp:param name="title" value="contact.Contact Page"/>
 </jsp:include>
 <body>
 <%@include file="partials/navbar.html"%>
-<h1>Contact Page</h1>
+<h1>contact.Contact Page</h1>
 
 <%@include file="partials/footer.html"%>
 </body>
