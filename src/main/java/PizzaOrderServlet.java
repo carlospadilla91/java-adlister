@@ -15,17 +15,18 @@ public class PizzaOrderServlet extends HttpServlet {
         String crust = request.getParameter("crust");
         String sauce = request.getParameter("sauce");
         String size = request.getParameter("size");
-        String[] toppings = request.getParameterValues("toppings");
         String address = request.getParameter("address");
+
         System.out.println("You selected crust type: " + crust);
         System.out.println("You selected sauce type: " + sauce);
         System.out.println("You selected size: " + size);
-        if (toppings != null) {
-            System.out.println("Your toppings are ");
-            for (String topping : toppings) {
-                System.out.println(topping);
-            }
+
+        String[] toppings = request.getParameterValues("toppings");
+        for (String topping : toppings) {
+            System.out.println(topping);
+            System.out.println(" ");
         }
+
         System.out.println("Your delivery address is: " + address);
 
     }
