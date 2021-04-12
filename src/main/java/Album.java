@@ -12,6 +12,15 @@ public class Album implements Serializable {
     public Album() {
     }
 
+    public Album(int id, String artist, String albumName, int releaseDate, long sales, String genre) {
+        this.id = id;
+        this.artist = artist;
+        this.albumName = albumName;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.genre = genre;
+    }
+
     public int getId() {
         return id;
     }
