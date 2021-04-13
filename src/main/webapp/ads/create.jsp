@@ -12,16 +12,15 @@
 </head>
 <body>
 
+    <h1>Create an Ad</h1>
+
     <form action="/ads/create" method="POST">
-        <label for="userId">User ID</label>
-        <input type="text" name="userId" id="userId">
-        <br />
         <label for="title">Title</label>
         <input name="title" id="title" type="text">
-        <br />
+        <br>
         <label for="description">Description</label>
         <input name="description" id="description" type="text">
-        <br />
+        <br>
         <input type="submit">
     </form>
 

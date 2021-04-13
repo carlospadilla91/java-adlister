@@ -4,10 +4,11 @@ import java.util.List;
 public class ListAdsDao implements Ads {
     private List<Ad> ads;
 
+    public ListAdsDao() {
+        this.ads = generateAds();
+    }
+
     public List<Ad> all() {
-        if (ads == null) {
-            ads = generateAds();
-        }
         return ads;
     }
 

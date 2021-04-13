@@ -9,8 +9,6 @@ import java.io.IOException;
 public class CreateAdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         req.getRequestDispatcher("/ads/create.jsp").forward(req, resp);
     }
 
@@ -18,13 +16,14 @@ public class CreateAdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Ads adsDao = DaoFactory.getAdsDao();
 
-        long userId = Long.parseLong(req.getParameter("userId"));
         String title = req.getParameter("title");
         String description = req.getParameter("description");
 
-        Ad ad = new Ad(1, userId, title, description);
+        Ad ad = new Ad(5, 1, title, description);
+        System.out.println(ad);
 
         adsDao.insert(ad);
+
         resp.sendRedirect("/ads");
     }
 }
