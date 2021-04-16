@@ -18,7 +18,7 @@ public class MySQLAdsDao implements Ads {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
                 config.getUrl(),
-                config.getUser(),
+                config.getUsername(),
                 config.getPassword()
             );
         } catch (SQLException e) {
@@ -28,23 +28,34 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public List<Ad> all() {
+        List<Ad> ads = new ArrayList<>();
         Statement stmt = null;
         try {
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ads");
-            return createAdsFromResults(rs);
+            String sql = "SELECT * FROM ads";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ads.add(new Ad(rs.getLong("id"),
+                        rs.getLong("user_id"),
+                        rs.getString("title"),
+                        rs.getString("description")));
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
         }
+        return ads;
     }
 
     @Override
     public Long insert(Ad ad) {
         try {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate(createInsertQuery(ad), Statement.RETURN_GENERATED_KEYS);
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
+            String sql = "INSERT INTO ads(user_id, title, description) VALUES(?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad.getUserId());
+            stmt.setString(2, ad.getTitle());
+            stmt.setString(3, ad.getDescription());
+            stmt.executeUpdate();
+            ResultSet generatedIdResultSet = stmt.getGeneratedKeys();
             return rs.getLong(1);
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new ad.", e);
@@ -57,21 +68,21 @@ public class MySQLAdsDao implements Ads {
             + "'" + ad.getTitle() +"', "
             + "'" + ad.getDescription() + "')";
     }
-
-    private Ad extractAd(ResultSet rs) throws SQLException {
-        return new Ad(
-            rs.getLong("id"),
-            rs.getLong("user_id"),
-            rs.getString("title"),
-            rs.getString("description")
-        );
-    }
-
-    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
-        List<Ad> ads = new ArrayList<>();
-        while (rs.next()) {
-            ads.add(extractAd(rs));
-        }
-        return ads;
-    }
+//
+//    private Ad extractAd(ResultSet rs) throws SQLException {
+//        return new Ad(
+//            rs.getLong("id"),
+//            rs.getLong("user_id"),
+//            rs.getString("title"),
+//            rs.getString("description")
+//        );
+//    }
+//
+//    private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
+//        List<Ad> ads = new ArrayList<>();
+//        while (rs.next()) {
+//            ads.add(extractAd(rs));
+//        }
+//        return ads;
+//    }
 }
